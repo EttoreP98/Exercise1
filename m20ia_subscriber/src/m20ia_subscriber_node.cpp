@@ -13,7 +13,7 @@ void print_matrix(geometry_msgs::TransformStamped transformStamped){
     q.setZ(transformStamped.transform.rotation.z);
 
 //Quaternioni -> Matrice di rotazione
-    tf::Matrix3x3 m(q);
+  tf::Matrix3x3 m(q);
     
 //Matrice di Rotazione -> RPY
   double roll, pitch, yaw;
