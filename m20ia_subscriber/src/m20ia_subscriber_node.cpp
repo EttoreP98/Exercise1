@@ -12,6 +12,7 @@ void print_matrix(geometry_msgs::TransformStamped transformStamped){
     q.setY(transformStamped.transform.rotation.y);
     q.setZ(transformStamped.transform.rotation.z);
 
+    
 //Quaternioni -> Matrice di rotazione
   tf::Matrix3x3 m(q);
     
@@ -23,7 +24,11 @@ void print_matrix(geometry_msgs::TransformStamped transformStamped){
   tf::Vector3 axis = q.getAxis();
 
     ROS_INFO_STREAM(
-     transformStamped  
+     transformStamped.header.frame_id << " - " << transformStamped.child_frame_id
+     <<"\nTraslazione:\n" 
+     <<"[" << transformStamped.transform.translation << "]" <<"\n"
+     <<"\nQuaternioni:\n"
+     <<"[" << transformStamped.transform.rotation << "]" <<"\n"
      <<"\nMatrice di Rotazione :\n"
      << "[" << m.getRow(0)[0] <<"\t" << m.getRow(0)[1] <<"\t" <<m.getRow(0)[2] << "]" <<"\n"
      << "[" << m.getRow(1)[0] <<"\t" << m.getRow(1)[1] <<"\t" <<m.getRow(1)[2] << "]" <<"\n"
@@ -54,7 +59,7 @@ int main(int argc, char** argv) {
     while(ros::ok()) {
         geometry_msgs::TransformStamped transformStamped;
         try{
-            for (int i = 1; i < 6; i++)
+            for (int i = 1; i < 7; i++)
             {
                 transformStamped = tfBuffer[i-1].lookupTransform("base_link","link"+std::to_string(i), ros::Time(0));
                 print_matrix(transformStamped);
